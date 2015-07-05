@@ -10,15 +10,22 @@ namespace FadeGE
 {
     public class Game : IDisposable
     {
-        private readonly RenderForm form;
+        private RenderForm form;
 
-        private readonly WindowRenderTarget target;
+        private WindowRenderTarget target;
+        private readonly GameClock gameClock;
+        private float lastDeltaTime = 1 / 60f;
 
         public delegate void RenderDelegate(RenderArgs e);
 
         public event RenderDelegate RenderEvent;
 
         public Game(int width, int height, string title) {
+            InitRenderTarget(width, height, title);
+            gameClock = new GameClock();
+        }
+
+        private void InitRenderTarget(int width, int height, string title) {
             form = new RenderForm {
                 Size = new System.Drawing.Size(width, height),
                 StartPosition = FormStartPosition.CenterScreen,
@@ -31,7 +38,7 @@ namespace FadeGE
             var hwndRenderTargetProperties = new HwndRenderTargetProperties {
                 Hwnd = form.Handle,
                 PixelSize = new Size2(form.Width, form.Height),
-                PresentOptions = PresentOptions.None
+                PresentOptions = PresentOptions.Immediately
             };
 
             var pixelFormat = new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Ignore);
@@ -53,9 +60,16 @@ namespace FadeGE
 
         private void Render() {
             Debug.Assert(RenderEvent != null, "RenderEvent != null");
+            gameClock.Start();
+
             target.BeginDraw();
-            RenderEvent(new RenderArgs(target, 0.0f));
+            RenderEvent(new RenderArgs(target, lastDeltaTime));
             target.EndDraw();
+
+            gameClock.Stop();
+            lastDeltaTime = gameClock.GetDeltaTime();
+            gameClock.Reset();
+            Debug.WriteLine("fps:{0}", 1 / lastDeltaTime);
         }
     }
 

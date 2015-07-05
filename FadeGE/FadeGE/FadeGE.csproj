@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="Color.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameClock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
