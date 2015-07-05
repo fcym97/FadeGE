@@ -14,7 +14,6 @@ namespace FadeGE
 
         private WindowRenderTarget target;
         private readonly GameClock gameClock;
-        private float lastDeltaTime = 1 / 60f;
 
         public delegate void RenderDelegate(RenderArgs e);
 
@@ -63,13 +62,10 @@ namespace FadeGE
             gameClock.Start();
 
             target.BeginDraw();
-            RenderEvent(new RenderArgs(target, lastDeltaTime));
+            RenderEvent(new RenderArgs(target, gameClock.GetDeltaTime()));
             target.EndDraw();
 
-            gameClock.Stop();
-            lastDeltaTime = gameClock.GetDeltaTime();
-            gameClock.Reset();
-            Debug.WriteLine("fps:{0}", 1 / lastDeltaTime);
+            gameClock.StopAndReset();
         }
     }
 

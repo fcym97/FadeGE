@@ -13,17 +13,14 @@ namespace FadeGE
         private int p = 0;
         private readonly float[] deltaTimes = { 1 / 60f, 1 / 60f, 1 / 60f };
 
-        public void Reset() {
-            stopwatch.Reset();
-        }
-
         public void Start() {
             stopwatch.Start();
         }
 
-        public void Stop() {
+        public void StopAndReset() {
             stopwatch.Stop();
             deltaTimes[p++ % 3] = stopwatch.ElapsedMilliseconds / 1000f;
+            stopwatch.Reset();
         }
 
         public float GetDeltaTime() {

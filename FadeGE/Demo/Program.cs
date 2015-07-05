@@ -1,4 +1,5 @@
-﻿using FadeGE;
+﻿using System.Diagnostics;
+using FadeGE;
 
 namespace Demo
 {
@@ -6,7 +7,7 @@ namespace Demo
     {
         // ReSharper disable once UnusedParameter.Local
         static void Main(string[] args) {
-            using (var game = new Game(1024,768,"FadeGameFramework Demo")) {
+            using (var game = new Game(1024, 768, "FadeGameFramework Demo")) {
                 game.RenderEvent += game_RenderEvent;
                 game.Run();
             }
@@ -14,6 +15,7 @@ namespace Demo
 
         static void game_RenderEvent(RenderArgs e) {
             e.Target.Clear(Color.White);
+            Debug.WriteLine(1 / e.DeltaTime);
         }
     }
 }
