@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的常规信息通过以下
 // 特性集控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("FadeGE")]
+[assembly: AssemblyTitle("Demo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FadeGE")]
+[assembly: AssemblyProduct("Demo")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("e0bf9c4c-0fc9-412d-a578-b2423f39c8dd")]
+[assembly: Guid("1c5fb07f-36ce-4084-96ee-1aaccac30c6b")]
 
 // 程序集的版本信息由下面四个值组成: 
 //
