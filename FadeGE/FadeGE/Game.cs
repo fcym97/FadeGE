@@ -9,6 +9,7 @@ using SharpDX.DXGI;
 using SharpDX.Windows;
 using AlphaMode = SharpDX.Direct2D1.AlphaMode;
 using Factory = SharpDX.Direct2D1.Factory;
+using System.Threading;
 
 namespace FadeGE
 {
@@ -58,7 +59,7 @@ namespace FadeGE
             var hwndRenderTargetProperties = new HwndRenderTargetProperties {
                 Hwnd = form.Handle,
                 PixelSize = new Size2(form.Width, form.Height),
-                PresentOptions = PresentOptions.Immediately
+                PresentOptions = PresentOptions.RetainContents
             };
 
             var pixelFormat = new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Ignore);
@@ -75,17 +76,18 @@ namespace FadeGE
         private void GameLoop() {
             Debug.Assert(RenderEvent != null, "RenderEvent != null");
 
-            foreach (var updatable in gameUpdatables) {
-                updatable.Update(gameClock.GetDeltaTime());
-            }
-
             gameClock.Start();
 
+            foreach (var updatable in gameUpdatables) {
+                updatable.Update(gameClock.DeltaTime);
+            }
+
             renderTarget.BeginDraw();
-            RenderEvent(new RenderArgs(renderTarget, gameClock.GetDeltaTime()));
+            RenderEvent(new RenderArgs(renderTarget, gameClock.DeltaTime));
             renderTarget.EndDraw();
 
             gameClock.StopAndReset();
+            Debug.WriteLine(1 / gameClock.DeltaTime);
         }
     }
 }

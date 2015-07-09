@@ -15,16 +15,14 @@ namespace FadeGE
             target.Clear(color);
         }
 
-        public void DrawBitmap(Bitmap bitmap, Vector2 position, float opacity = 1f) {
+        public void DrawBitmap(Bitmap bitmap, Size2F frameSize,Vector2 position, RectangleF srcRectangleF, float opacity = 1f) {
             target.DrawBitmap(bitmap,
                               new RectangleF(position.X, position.Y,
-                                             bitmap.Size.Width,
-                                             bitmap.Size.Height),
+                                             frameSize.Width,
+                                             frameSize.Height),
                               opacity,
                               BitmapInterpolationMode.Linear,
-                              new RectangleF(0, 0,
-                                             bitmap.Size.Width,
-                                             bitmap.Size.Height)
+                              srcRectangleF
                 );
         }
     }

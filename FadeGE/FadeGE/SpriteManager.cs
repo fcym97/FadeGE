@@ -30,7 +30,8 @@ namespace FadeGE
 
         public void Draw(SimpleRenderTarget renderTarget) {
             foreach (var sprite in sprites) {
-                renderTarget.DrawBitmap(sprite.Texture, sprite.Position);
+                renderTarget.DrawBitmap(sprite.Texture, sprite.FrameSize, sprite.Position, 
+                    sprite.TrimAreaList[sprite.FrameIndex]);
             }
         }
     }

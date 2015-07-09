@@ -15,11 +15,11 @@ namespace Demo
                 var personList = new Shelly[1];
                 for (var i = 0; i < personList.Length; i++) {
                     personList[i] = new Shelly();
-                    var width = personList[i].Texture.Size.Width;
-                    var height = personList[i].Texture.Size.Height;
-                    personList[i].Position = new Vector2(
-                        random.Next(0, 1024 - (int)width), random.Next(0, 768 - (int)height));
-                    personList[i].v = new Vector2(random.Next(1, 100), random.Next(1, 100));
+                    var width = personList[i].TextureSize.Width;
+                    var height = personList[i].TextureSize.Height;
+                    personList[i].Position = new Vector2(0, 0);
+                    //personList[i].V = new Vector2(random.Next(1, 100), random.Next(1, 100));
+                    personList[i].V = new Vector2(0, 0);
                     game.SpriteManager.AddSprite(personList[i]);
                 }
                 game.RenderEvent += game_RenderEvent;
@@ -30,7 +30,6 @@ namespace Demo
         static void game_RenderEvent(RenderArgs e) {
             e.Target.Clear(Color.White);
             Game.Instance.SpriteManager.Draw(e.Target);
-            Debug.WriteLine("fps:{0}", 1 / e.DeltaTime);
         }
     }
 }

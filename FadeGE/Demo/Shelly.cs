@@ -6,11 +6,11 @@ namespace Demo
 {
     class Shelly : Sprite
     {
-        
+
         public Vector2 V = new Vector2(100, 100);
 
         public Shelly()
-            : base("Content/grossini.png") {
+            : base("Content/Sasuke-fireball.png", true, 23, 1, 0.1f) {
             Tag = "Shelly";
             Zorder = int.MaxValue;
         }
@@ -23,6 +23,7 @@ namespace Demo
             if (Position.Y + Texture.Size.Height > 768 || Position.Y <= 0) {
                 V *= new Vector2(1, -1);
             }
+            base.Update(dt);
         }
     }
 }
