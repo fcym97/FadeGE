@@ -1,36 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.DXGI;
 using SharpDX.Windows;
-using Format = SharpDX.DXGI.Format;
+using AlphaMode = SharpDX.Direct2D1.AlphaMode;
+using Factory = SharpDX.Direct2D1.Factory;
 
 namespace FadeGE
 {
     public class Game : IDisposable
     {
-        private RenderForm form;
-
-        private WindowRenderTarget target;
-        private readonly GameClock gameClock;
-
         public delegate void RenderDelegate(RenderArgs e);
 
-        public event RenderDelegate RenderEvent;
+        private readonly GameClock gameClock;
+        private readonly List<IUpdatable> gameUpdatables;
+        public readonly ResourcesManager ResourcesManager;
+        public readonly SpriteManager SpriteManager;
+        private RenderForm form;
+        private WindowRenderTarget renderTarget;
 
         public Game(int width, int height, string title) {
             InitRenderTarget(width, height, title);
             gameClock = new GameClock();
+            ResourcesManager = new ResourcesManager(renderTarget);
+            SpriteManager = new SpriteManager();
+            gameUpdatables = new List<IUpdatable>(10) {
+                SpriteManager
+            };
+            Instance = this;
         }
+
+        public static Game Instance { get; private set; }
+
+        public void Dispose() {
+            if (!renderTarget.IsDisposed) {
+                renderTarget.Dispose();
+            }
+        }
+
+        public event RenderDelegate RenderEvent;
 
         private void InitRenderTarget(int width, int height, string title) {
             form = new RenderForm {
-                Size = new System.Drawing.Size(width, height),
+                Size = new Size(width, height),
                 StartPosition = FormStartPosition.CenterScreen,
                 AutoScaleMode = AutoScaleMode.None,
                 Text = title
             };
+
 
             var factory = new Factory(FactoryType.SingleThreaded);
 
@@ -44,52 +65,27 @@ namespace FadeGE
             var renderTargetProperties = new RenderTargetProperties(
                 RenderTargetType.Hardware, pixelFormat, 0, 0, RenderTargetUsage.None, FeatureLevel.Level_DEFAULT);
 
-            target = new WindowRenderTarget(factory, renderTargetProperties, hwndRenderTargetProperties);
-        }
-
-        public void Dispose() {
-            if (!target.IsDisposed) {
-                target.Dispose();
-            }
+            renderTarget = new WindowRenderTarget(factory, renderTargetProperties, hwndRenderTargetProperties);
         }
 
         public void Run() {
-            RenderLoop.Run(form, Render);
+            RenderLoop.Run(form, GameLoop);
         }
 
-        private void Render() {
+        private void GameLoop() {
             Debug.Assert(RenderEvent != null, "RenderEvent != null");
+
+            foreach (var updatable in gameUpdatables) {
+                updatable.Update(gameClock.GetDeltaTime());
+            }
+
             gameClock.Start();
 
-            target.BeginDraw();
-            RenderEvent(new RenderArgs(target, gameClock.GetDeltaTime()));
-            target.EndDraw();
+            renderTarget.BeginDraw();
+            RenderEvent(new RenderArgs(renderTarget, gameClock.GetDeltaTime()));
+            renderTarget.EndDraw();
 
             gameClock.StopAndReset();
-        }
-    }
-
-    public class FRenderTarget
-    {
-        private readonly RenderTarget target;
-
-        public FRenderTarget(RenderTarget target) {
-            this.target = target;
-        }
-
-        public void Clear(Color color) {
-            target.Clear(color);
-        }
-    }
-
-    public class RenderArgs
-    {
-        public readonly FRenderTarget Target;
-        public readonly float DeltaTime;
-
-        public RenderArgs(RenderTarget target, float dt) {
-            Target = new FRenderTarget(target);
-            DeltaTime = dt;
         }
     }
 }
