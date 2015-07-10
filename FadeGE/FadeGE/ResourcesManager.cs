@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
 using SharpDX;
 using SharpDX.Direct2D1;
@@ -15,6 +17,7 @@ namespace FadeGE
 {
     public class ResourcesManager
     {
+        private Dictionary<string,int> bitmapNameDictionary = new Dictionary<string, int>();
         private readonly List<Bitmap> bitmapList = new List<Bitmap>();
         private readonly RenderTarget renderTarget;
         private int index;
@@ -33,15 +36,20 @@ namespace FadeGE
         /// <param name="file">路径</param>
         /// <returns>载入的bitmap的位置</returns>
         public int LoadBitmapFromFile(string file) {
+            var fileName = Path.GetFileName(file);
+            Debug.Assert(fileName != null, "fileName != null");
+            if (bitmapNameDictionary.ContainsKey(fileName)) {
+                return bitmapNameDictionary[fileName];
+            }
             // Loads from file using System.Drawing.Image
-            using (var bitmap = (System.Drawing.Bitmap) Image.FromFile(file)) {
+            using (var bitmap = (System.Drawing.Bitmap)Image.FromFile(file)) {
                 var sourceArea = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
                 var bitmapProperties =
                     new BitmapProperties(new PixelFormat(Format.R8G8B8A8_UNorm, AlphaMode.Premultiplied));
                 var size = new Size(bitmap.Width, bitmap.Height);
 
                 // Transform pixels from BGRA to RGBA
-                var stride = bitmap.Width * sizeof (int);
+                var stride = bitmap.Width * sizeof(int);
                 using (var tempStream = new DataStream(bitmap.Height * stride, true, true)) {
                     // Lock System.Drawing.Bitmap
                     var bitmapData = bitmap.LockBits(sourceArea, ImageLockMode.ReadOnly,
@@ -66,7 +74,7 @@ namespace FadeGE
                     bitmapList.Add(new Bitmap(renderTarget,
                                               new Size2(size.Width, size.Height), tempStream, stride,
                                               bitmapProperties));
-                    ;
+                    bitmapNameDictionary.Add(fileName, index);
                     return index++;
                 }
             }
