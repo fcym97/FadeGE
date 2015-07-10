@@ -6,7 +6,7 @@ namespace FadeGE
     public sealed class GameClock
     {
         private readonly Stopwatch stopwatch= new Stopwatch();
-        private float cacheDeltaTime;
+        private float cacheDeltaTime = 1 / 60f;
 
         public void Start() {
             stopwatch.Start();

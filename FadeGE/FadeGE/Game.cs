@@ -14,6 +14,8 @@ namespace FadeGE
 {
     public class Game : IDisposable
     {
+        public readonly UpdateDispatcher UpdateDispatcher;
+
         public readonly FpsManager FpsManager;
 
         public readonly ResourcesManager ResourcesManager;
@@ -22,23 +24,19 @@ namespace FadeGE
 
         private readonly GameClock gameClock;
 
-        private readonly List<IUpdatable> gameUpdatables;
-
         private RenderForm form;
 
         private WindowRenderTarget renderTarget;
 
         public Game(int width, int height, string title) {
-            InitRenderTarget(width, height, title);
+            InitRenderComponent(width, height, title);
+            ResourcesManager = new ResourcesManager(renderTarget);//todo 增加载入资源事件
             gameClock = new GameClock();
-            ResourcesManager = new ResourcesManager(renderTarget);
+            UpdateDispatcher = new UpdateDispatcher();
             SpriteManager = new SpriteManager();
             FpsManager = new FpsManager(renderTarget);
-
-            gameUpdatables = new List<IUpdatable> {
-                SpriteManager,
-                FpsManager
-            };
+            UpdateDispatcher.AddComponent(FpsManager, 0.4f);
+            UpdateDispatcher.AddComponent(SpriteManager, 0);
             Instance = this;
         }
 
@@ -63,17 +61,22 @@ namespace FadeGE
             //开始计时
             gameClock.Start();
             //更新所有需要更新的组件
-            foreach (var updatable in gameUpdatables) {
-                updatable.Update(gameClock.DeltaTime);
-            }
-            //开始绘图
+            UpdateDispatcher.Update(gameClock.DeltaTime);
+            //绘图
             renderTarget.BeginDraw();
             RenderEventHandler(new RenderArgs(renderTarget, gameClock.DeltaTime));
             renderTarget.EndDraw();
+            //停止计时
             gameClock.StopAndReset();
         }
 
-        private void InitRenderTarget(int width, int height, string title) {
+        /// <summary>
+        /// 初始化绘图有关组件
+        /// </summary>
+        /// <param name="width">游戏窗口宽度</param>
+        /// <param name="height">游戏窗口高度</param>
+        /// <param name="title">游戏窗口标题</param>
+        private void InitRenderComponent(int width, int height, string title) {
             form = new RenderForm {
                 Size = new Size(width, height),
                 StartPosition = FormStartPosition.CenterScreen,

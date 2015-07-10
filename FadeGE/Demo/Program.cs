@@ -12,7 +12,7 @@ namespace Demo
         static void Main(string[] args) {
             var random = new Random();
             using (var game = new Game(1024, 768, "FadeGameFramework Demo")) {
-                var personList = new Shelly[1000];
+                var personList = new Shelly[100];
                 for (var i = 0; i < personList.Length; i++) {
                     personList[i] = new Shelly();
                     var width = personList[i].FrameSize.Width;
