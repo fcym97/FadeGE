@@ -5,10 +5,10 @@ namespace FadeGE
     public class RenderArgs
     {
         public readonly float DeltaTime;
-        public readonly SimpleRenderTarget Target;
+        public readonly SimpleRenderTarget SimpleRenderTarget;
 
         public RenderArgs(RenderTarget target, float dt) {
-            Target = new SimpleRenderTarget(target);
+            SimpleRenderTarget = new SimpleRenderTarget(target);
             DeltaTime = dt;
         }
     }

@@ -1,5 +1,6 @@
 using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.DirectWrite;
 
 namespace FadeGE
 {
@@ -15,7 +16,12 @@ namespace FadeGE
             target.Clear(color);
         }
 
-        public void DrawBitmap(Bitmap bitmap, Size2F frameSize,Vector2 position, RectangleF srcRectangleF, float opacity = 1f) {
+        public void DrawText(string text, TextFormat textFormat, RectangleF rect, Brush brush) {
+            target.DrawText(text, textFormat, rect, brush);
+        }
+
+        public void DrawBitmap(Bitmap bitmap, Size2F frameSize,
+            Vector2 position, RectangleF srcRectangleF, float opacity = 1f) {
             target.DrawBitmap(bitmap,
                               new RectangleF(position.X, position.Y,
                                              frameSize.Width,

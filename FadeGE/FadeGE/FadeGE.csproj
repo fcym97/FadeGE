@@ -97,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FpsManager.cs" />
     <Compile Include="SimpleRenderTarget.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />

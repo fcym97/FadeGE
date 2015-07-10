@@ -7,8 +7,8 @@ namespace FadeGE
     {
         public readonly int FrameCount;
         public readonly RectangleF[] TrimAreaList;
-        public float Duration;
-        private float ElaspedTime;
+        public readonly float Duration;
+        private float elaspedTime;
         private int frameIndex;
 
         public Sprite(string path, bool isSpriteSheet = false, int row = 1, int col = 1, float duration = 1f) {
@@ -70,9 +70,9 @@ namespace FadeGE
         private int Row { get; set; }
 
         public virtual void Update(float dt) {
-            ElaspedTime += dt;
-            if (ElaspedTime > Duration) {
-                ElaspedTime -= Duration;
+            elaspedTime += dt;
+            if (elaspedTime > Duration) {
+                elaspedTime -= Duration;
                 frameIndex++;
             }
         }
