@@ -17,10 +17,10 @@ namespace Demo
 
         public override void Update(float dt) {
             Position += V * dt;
-            if (PositionX + TextureSize.Width > 1024 || PositionX <= 0) {
+            if (PositionX + TextureSize.Width > Game.Instance.WindowSize.Width || PositionX <= 0) {
                 V *= new Vector2(-1, 1);
             }
-            if (PositionY + TextureSize.Height > 768 || PositionY <= 0) {
+            if (PositionY + TextureSize.Height > Game.Instance.WindowSize.Height || PositionY <= 0) {
                 V *= new Vector2(1, -1);
             }
             base.Update(dt);

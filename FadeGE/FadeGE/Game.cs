@@ -14,6 +14,8 @@ namespace FadeGE
 {
     public class Game : IDisposable
     {
+        public Size2 WindowSize { get; private set; }
+
         public readonly UpdateDispatcher UpdateDispatcher;
 
         public readonly FpsManager FpsManager;
@@ -22,7 +24,7 @@ namespace FadeGE
 
         public readonly SpriteManager SpriteManager;
 
-        private readonly GameClock gameClock;
+        public readonly GameClock GameClock;
 
         private RenderForm form;
 
@@ -32,7 +34,7 @@ namespace FadeGE
             InitRenderComponent(width, height, title);
 
             ResourcesManager = new ResourcesManager(renderTarget);//todo 增加载入资源事件
-            gameClock = new GameClock();
+            GameClock = new GameClock();
             UpdateDispatcher = new UpdateDispatcher();
             SpriteManager = new SpriteManager();
             FpsManager = new FpsManager(renderTarget);
@@ -61,15 +63,15 @@ namespace FadeGE
         private void GameLoop() {
             Debug.Assert(RenderEventHandler != null, "RenderEvent != null");
             //开始计时
-            gameClock.Start();
+            GameClock.Start();
             //更新所有需要更新的组件
-            UpdateDispatcher.Update(gameClock.DeltaTime);
+            UpdateDispatcher.Update(GameClock.DeltaTime);
             //绘图
             renderTarget.BeginDraw();
-            RenderEventHandler(new RenderArgs(renderTarget, gameClock.DeltaTime));
+            RenderEventHandler(new RenderArgs(renderTarget, GameClock.DeltaTime));
             renderTarget.EndDraw();
             //停止计时
-            gameClock.StopAndReset();
+            GameClock.StopAndReset();
         }
 
         /// <summary>
@@ -85,6 +87,8 @@ namespace FadeGE
                 AutoScaleMode = AutoScaleMode.None,
                 Text = title
             };
+
+            WindowSize = new Size2(width, height);
 
             var factory = new Factory(FactoryType.SingleThreaded);
 

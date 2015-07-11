@@ -41,7 +41,9 @@ namespace FadeGE
         public Size2F FrameSize { get; private set; }
 
         public bool HasSpriteSheetAnimation {
-            get { return !(Row == 1 && Col == 1); }
+            get {
+                return !(Row == 1 && Col == 1);
+            }
         }
 
         public Vector2 Position { get; set; }
