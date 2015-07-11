@@ -2,6 +2,6 @@
 {
     public interface IDrawable
     {
-        void Draw(SimpleRenderTarget renderTarget);
+        void Draw(SimpleRenderTarget simpleRenderTarget);
     }
 }

@@ -21,9 +21,9 @@ namespace FadeGE
             rectangle = new RectangleF(0, 0, 200, 16);
         }
 
-        public void Draw(SimpleRenderTarget renderTarget) {
-            renderTarget.DrawText(string.Format("FPS:{0:F1}", fps), textFormat, rectangle, brush);
-            renderTarget.DrawText(
+        public void Draw(SimpleRenderTarget simpleRenderTarget) {
+            simpleRenderTarget.DrawText(string.Format("FPS:{0:F1}", fps), textFormat, rectangle, brush);
+            simpleRenderTarget.DrawText(
                 string.Format("TotalRunTime:{0:F3}s", Game.Instance.UpdateDispatcher.TotalSeconds), textFormat,
                 new RectangleF(0, 16, 200, 16), brush);
         }

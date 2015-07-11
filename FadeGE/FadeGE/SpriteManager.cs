@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FadeGE
 {
-    public class SpriteManager : IUpdatable, IDrawable
+    public class SpriteManager :  IDrawable
     {
         private readonly List<Sprite> sprites = new List<Sprite>();
 
@@ -22,15 +22,9 @@ namespace FadeGE
             sprites.RemoveAll(sprite => sprite.Tag == tag);
         }
 
-        public void Update(float dt) {
+        public void Draw(SimpleRenderTarget simpleRenderTarget) {
             foreach (var sprite in sprites) {
-                sprite.Update(dt);
-            }
-        }
-
-        public void Draw(SimpleRenderTarget renderTarget) {
-            foreach (var sprite in sprites) {
-                renderTarget.DrawBitmap(sprite.Texture, sprite.FrameSize, sprite.Position, 
+                simpleRenderTarget.DrawBitmap(sprite.Texture, sprite.FrameSize, sprite.Position, 
                     sprite.TrimAreaList[sprite.FrameIndex]);
             }
         }

@@ -30,14 +30,16 @@ namespace FadeGE
 
         public Game(int width, int height, string title) {
             InitRenderComponent(width, height, title);
+
             ResourcesManager = new ResourcesManager(renderTarget);//todo 增加载入资源事件
             gameClock = new GameClock();
             UpdateDispatcher = new UpdateDispatcher();
             SpriteManager = new SpriteManager();
             FpsManager = new FpsManager(renderTarget);
-            UpdateDispatcher.AddComponent(FpsManager, 0.4f);
-            UpdateDispatcher.AddComponent(SpriteManager, 0);
+
+            UpdateDispatcher.AddIUpdatable(FpsManager, 0.4f);
             Instance = this;
+
         }
 
         public delegate void RenderDelegate(RenderArgs e);

@@ -7,7 +7,7 @@ using FadeGE;
 
 namespace FadeGE
 {
-    public class UpdateDispatcher : IUpdatable
+    public sealed class UpdateDispatcher : IUpdatable
     {
         public double TotalSeconds { get; private set; }
         private readonly List<IUpdatable> updatableList = new List<IUpdatable>();
@@ -25,7 +25,12 @@ namespace FadeGE
             }
         }
 
-        public void AddComponent(IUpdatable updatable, float duration) {
+        /// <summary>
+        /// 添加需要定时更新IUpdatable
+        /// </summary>
+        /// <param name="updatable">要更新的对象</param>
+        /// <param name="duration">更新周期。单位是秒</param>
+        public void AddIUpdatable(IUpdatable updatable, float duration) {
             updatableList.Add(updatable);
             durationList.Add(duration);
             pastTimeList.Add(0);

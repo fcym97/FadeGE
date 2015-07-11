@@ -15,9 +15,9 @@ using Rectangle = System.Drawing.Rectangle;
 
 namespace FadeGE
 {
-    public class ResourcesManager
+    public sealed class ResourcesManager
     {
-        private Dictionary<string,int> bitmapNameDictionary = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> bitmapNameDictionary = new Dictionary<string, int>();
         private readonly List<Bitmap> bitmapList = new List<Bitmap>();
         private readonly RenderTarget renderTarget;
         private int index;
@@ -30,11 +30,20 @@ namespace FadeGE
             return bitmapList[resId];
         }
 
+        public int GetTextureIdFromPath(string path) {
+            var filename = Path.GetFileName(path);
+            Debug.Assert(filename != null, "filename != null");
+            if (bitmapNameDictionary.ContainsKey(filename)) {
+                return bitmapNameDictionary[filename];
+            }
+            throw new DirectoryNotFoundException("找不到路径对应的资源文件。请先在载入资源的方法中载入该资源！");
+        }
+
         /// <summary>
         ///     从指定的路径中加载bitmap
         /// </summary>
         /// <param name="file">路径</param>
-        /// <returns>载入的bitmap的位置</returns>
+        /// <returns>TextureId</returns>
         public int LoadBitmapFromFile(string file) {
             var fileName = Path.GetFileName(file);
             Debug.Assert(fileName != null, "fileName != null");

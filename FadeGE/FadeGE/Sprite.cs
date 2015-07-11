@@ -5,16 +5,14 @@ namespace FadeGE
 {
     public class Sprite : IUpdatable
     {
+        public readonly float Duration;
         public readonly int FrameCount;
         public readonly RectangleF[] TrimAreaList;
-        public readonly float Duration;
-        private float elaspedTime;
         private int frameIndex;
 
-        public Sprite(string path, bool isSpriteSheet = false, int row = 1, int col = 1, float duration = 1f) {
-            TextureId = Game.Instance.ResourcesManager.LoadBitmapFromFile(path);
+        public Sprite(string path, int row = 1, int col = 1, float duration = 1f) {
+            TextureId = Game.Instance.ResourcesManager.GetTextureIdFromPath(path);
             Texture = Game.Instance.ResourcesManager.GetResourceFromId(TextureId);
-            HasSpriteSheetAnimation = isSpriteSheet;
             Row = row;
             Col = col;
             Duration = duration;
@@ -32,6 +30,7 @@ namespace FadeGE
                     }
                 }
             }
+            Game.Instance.UpdateDispatcher.AddIUpdatable(this, Duration);
         }
 
         public int FrameIndex {
@@ -41,7 +40,9 @@ namespace FadeGE
 
         public Size2F FrameSize { get; private set; }
 
-        public bool HasSpriteSheetAnimation { get; private set; }
+        public bool HasSpriteSheetAnimation {
+            get { return !(Row == 1 && Col == 1); }
+        }
 
         public Vector2 Position { get; set; }
 
@@ -70,11 +71,7 @@ namespace FadeGE
         private int Row { get; set; }
 
         public virtual void Update(float dt) {
-            elaspedTime += dt;
-            if (elaspedTime > Duration) {
-                elaspedTime -= Duration;
-                frameIndex++;
-            }
+            frameIndex++;
         }
     }
 }

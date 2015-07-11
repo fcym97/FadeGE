@@ -8,22 +8,33 @@ namespace Demo
 {
     static class Program
     {
+
+        private static void CreateTestSprites() {
+            var random = new Random();
+            var personList = new TestSprite[1];
+            for (var i = 0; i < personList.Length; i++) {
+                personList[i] = new TestSprite();
+                var width = personList[i].FrameSize.Width;
+                var height = personList[i].FrameSize.Height;
+                personList[i].Position = new Vector2(random.Next(0, 1024 - (int)width), random.Next(0, 768 - (int)height));
+                personList[i].V = new Vector2(random.Next(1, 100), random.Next(1, 100));
+
+                Game.Instance.SpriteManager.AddSprite(personList[i]);
+            }
+        }
+
         // ReSharper disable once UnusedParameter.Local
         static void Main(string[] args) {
-            var random = new Random();
             using (var game = new Game(1024, 768, "FadeGameFramework Demo")) {
-                var personList = new Shelly[100];
-                for (var i = 0; i < personList.Length; i++) {
-                    personList[i] = new Shelly();
-                    var width = personList[i].FrameSize.Width;
-                    var height = personList[i].FrameSize.Height;
-                    personList[i].Position = new Vector2(random.Next(0, 1024 - (int)width), random.Next(0, 768 - (int)height));
-                    personList[i].V = new Vector2(random.Next(1, 100), random.Next(1, 100));
-                    game.SpriteManager.AddSprite(personList[i]);
-                }
+                LoadContent();
+                CreateTestSprites();
                 game.RenderEventHandler += game_RenderEvent;
                 game.Run();
             }
+        }
+
+        static void LoadContent() {
+            Game.Instance.ResourcesManager.LoadBitmapFromFile("Content/Sasuke-fireball.png");
         }
 
         static void game_RenderEvent(RenderArgs e) {
