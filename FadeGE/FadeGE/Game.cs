@@ -18,7 +18,7 @@ namespace FadeGE
 
         public readonly UpdateDispatcher UpdateDispatcher;
 
-        public readonly FpsManager FpsManager;
+        public readonly EngineInfoDrawer EngineInfoDrawer;
 
         public readonly ResourcesManager ResourcesManager;
 
@@ -37,9 +37,9 @@ namespace FadeGE
             GameClock = new GameClock();
             UpdateDispatcher = new UpdateDispatcher();
             SpriteManager = new SpriteManager();
-            FpsManager = new FpsManager(renderTarget);
+            EngineInfoDrawer = new EngineInfoDrawer(renderTarget);
 
-            UpdateDispatcher.AddIUpdatable(FpsManager, 0.4f);
+            UpdateDispatcher.AddIUpdatable(EngineInfoDrawer, 0.4f);
             Instance = this;
 
         }
@@ -95,7 +95,7 @@ namespace FadeGE
             var hwndRenderTargetProperties = new HwndRenderTargetProperties {
                 Hwnd = form.Handle,
                 PixelSize = new Size2(form.Width, form.Height),
-                PresentOptions = PresentOptions.None
+                PresentOptions = PresentOptions.RetainContents
             };
 
             var pixelFormat = new PixelFormat(Format.B8G8R8A8_UNorm, AlphaMode.Ignore);
