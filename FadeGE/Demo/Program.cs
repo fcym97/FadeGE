@@ -3,46 +3,52 @@ using System.Diagnostics;
 using FadeGE;
 using SharpDX;
 using SharpDX.Direct2D1;
+using SharpDX.RawInput;
+using System.Windows.Forms;
 
 namespace Demo
 {
     static class Program
     {
-
-        private static void CreateTestSprites() {
-            var random = new Random();
-            var personList = new TestSprite[5];
-            for (var i = 0; i < personList.Length; i++) {
-                personList[i] = new TestSprite();
-                var width = personList[i].FrameSize.Width;
-                var height = personList[i].FrameSize.Height;
-                personList[i].Position = new Vector2(random.Next(0, 1024 - (int)width), random.Next(0, 768 - (int)height));
-                //personList[i].V = new Vector2(random.Next(1, 100), random.Next(1, 100));
-
-                Game.Instance.SpriteManager.AddSprite(personList[i]);
-            }
-        }
+        static TestSprite testSprite;
+        static Game game;
 
         // ReSharper disable once UnusedParameter.Local
         static void Main(string[] args) {
-            using (var game = new Game(1024, 768, "FadeGameFramework Demo")) {
-                LoadContent();
-                CreateTestSprites();
-                game.RenderEventHandler += game_RenderEvent;
-                game.Run();
+            game = new Game(1024, 768, "FadeGameFramework Demo");
+            LoadAllContents();
+            testSprite = new TestSprite();
+            game.SpriteManager.AddSprite(testSprite);
+            game.RenderEventHandler += Render;
+            game.InputManager.KeyboardInputEventHandler += KeyboardHandler;
+            game.Run();
+        }
+
+        private static void KeyboardHandler() {
+            const int v = 10;
+            if (game.InputManager.IsKeyDown(Keys.Up)) {
+                testSprite.Position -= new Vector2(0, v);
+            }
+            else if (game.InputManager.IsKeyDown(Keys.Down)) {
+                testSprite.Position += new Vector2(0, v);
+            }
+            if (game.InputManager.IsKeyDown(Keys.Left)) {
+                testSprite.Position -= new Vector2(v, 0);
+            }
+            else if (game.InputManager.IsKeyDown(Keys.Right)) {
+                testSprite.Position += new Vector2(v, 0);
             }
         }
 
-        static void LoadContent() {
-            Game.Instance.ResourcesManager.LoadBitmapFromFile("Content/Sasuke-fireball.png");
+        static void LoadAllContents() {
+            game.ResourcesManager.LoadBitmapFromFile("Content/grossini.png");
+            game.ResourcesManager.LoadBitmapFromFile("Content/Sasuke-fireball.png");
         }
 
-        static void game_RenderEvent(RenderArgs e) {
+        static void Render(RenderArgs e) {
             e.SimpleRenderTarget.Clear(Color.White);
-            Game.Instance.EngineInfoDrawer.Draw(e.SimpleRenderTarget);
-            Game.Instance.SpriteManager.Draw(e.SimpleRenderTarget);
+            game.EngineInfoDrawer.Draw(e.SimpleRenderTarget);
+            game.SpriteManager.Draw(e.SimpleRenderTarget);
         }
-
-
     }
 }

@@ -6,7 +6,7 @@ namespace FadeGE
     {
         private readonly List<Sprite> spriteList = new List<Sprite>();
 
-        public int SpriteCount { get { return spriteList.Count; } }
+        public int SpriteCount => spriteList.Count;
 
         public void AddSprite(Sprite sprite) {
             spriteList.Add(sprite);

@@ -56,35 +56,85 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="AssimpNet">
-      <HintPath>..\packages\AssimpNet.3.3.1\lib\net45\AssimpNet.dll</HintPath>
+    <Reference Include="AssimpNet, Version=3.3.1.0, Culture=neutral, PublicKeyToken=0d51b391f59f42a6, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\AssimpNet.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.3.0.0-alpha02\lib\net45\SharpDX.dll</HintPath>
+    <Reference Include="SharpDX, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11-Signed-net40\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Animation">
-      <HintPath>..\packages\SharpDX.Animation.2.0.4\lib\net20\SharpDX.Animation.dll</HintPath>
+    <Reference Include="SharpDX.Animation, Version=2.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Animation.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Desktop">
-      <HintPath>..\packages\SharpDX.Desktop.3.0.0-alpha02\lib\net45\SharpDX.Desktop.dll</HintPath>
+    <Reference Include="SharpDX.D3DCompiler">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.D3DCompiler.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Diagnostics">
-      <HintPath>..\packages\SharpDX.Diagnostics.2.0.4\lib\net20\SharpDX.Diagnostics.dll</HintPath>
+    <Reference Include="SharpDX.Direct2D1, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Direct2D1.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Direct2D1, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.Direct2D1.3.0.0-alpha02\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+    <Reference Include="SharpDX.Direct3D11, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Direct3D11.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.DirectInput">
-      <HintPath>..\packages\SharpDX.DirectInput.3.0.0-alpha02\lib\net45\SharpDX.DirectInput.dll</HintPath>
+    <Reference Include="SharpDX.Direct3D11.Effects">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Direct3D11.Effects.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.DirectSound">
-      <HintPath>..\packages\SharpDX.DirectSound.3.0.0-alpha02\lib\net45\SharpDX.DirectSound.dll</HintPath>
+    <Reference Include="SharpDX.Direct3D9, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Direct3D9.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.DXGI, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.DXGI.3.0.0-alpha02\lib\net45\SharpDX.DXGI.dll</HintPath>
+    <Reference Include="SharpDX.DirectComposition">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.DirectComposition.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.Mathematics">
-      <HintPath>..\packages\SharpDX.Mathematics.3.0.0-alpha02\lib\net45\SharpDX.Mathematics.dll</HintPath>
+    <Reference Include="SharpDX.DirectManipulation">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.DirectManipulation.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.MediaFoundation, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.MediaFoundation.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.RawInput, Version=2.5.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.RawInput.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Audio">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.Audio.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Compiler">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.CompilerTask">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.CompilerTask.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Game">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.Game.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Graphics">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.Graphics.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Input">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Toolkit.Yaml">
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.Toolkit.Yaml.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.XAudio2.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XInput, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\CodeDownload\SharpDX-release\Bin\DirectX11_2-Signed-net40\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -98,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EngineInfoDrawer.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="SimpleRenderTarget.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />

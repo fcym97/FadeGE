@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -14,34 +13,46 @@ namespace FadeGE
 {
     public class Game : IDisposable
     {
-        public Size2 WindowSize { get; private set; }
-
-        public readonly UpdateDispatcher UpdateDispatcher;
-
         public readonly EngineInfoDrawer EngineInfoDrawer;
+
+        public readonly RenderForm Form;
+
+        public readonly GameClock GameClock;
+
+        public readonly InputManager InputManager;
 
         public readonly ResourcesManager ResourcesManager;
 
         public readonly SpriteManager SpriteManager;
 
-        public readonly GameClock GameClock;
-
-        private RenderForm form;
+        public readonly UpdateDispatcher UpdateDispatcher;
 
         private WindowRenderTarget renderTarget;
 
         public Game(int width, int height, string title) {
+            Form = new RenderForm {
+                Size = new Size(width, height),
+                StartPosition = FormStartPosition.CenterScreen,
+                AutoScaleMode = AutoScaleMode.None,
+                Text = title
+            };
+
+            InputManager = new InputManager();
+            //初始化渲染组件
             InitRenderComponent(width, height, title);
 
-            ResourcesManager = new ResourcesManager(renderTarget);//todo 增加载入资源事件
+            //初始化所有组件
+            ResourcesManager = new ResourcesManager(renderTarget);
             GameClock = new GameClock();
             UpdateDispatcher = new UpdateDispatcher();
             SpriteManager = new SpriteManager();
             EngineInfoDrawer = new EngineInfoDrawer(renderTarget);
 
-            UpdateDispatcher.AddIUpdatable(EngineInfoDrawer, 0.4f);
-            Instance = this;
+            //为需要更新的组件添加更新关联
+            UpdateDispatcher.Schedule(InputManager.Update);
+            UpdateDispatcher.Schedule(EngineInfoDrawer.Update, 0.4f);
 
+            Instance = this;
         }
 
         public delegate void RenderDelegate(RenderArgs e);
@@ -50,6 +61,10 @@ namespace FadeGE
 
         public static Game Instance { get; private set; }
 
+        public Vector2 WindowPosition { get; private set; }
+
+        public Size2 WindowSize { get; private set; }
+
         public void Dispose() {
             if (!renderTarget.IsDisposed) {
                 renderTarget.Dispose();
@@ -57,11 +72,12 @@ namespace FadeGE
         }
 
         public void Run() {
-            RenderLoop.Run(form, GameLoop);
+            RenderLoop.Run(Form, GameLoop);
         }
 
         private void GameLoop() {
             Debug.Assert(RenderEventHandler != null, "RenderEvent != null");
+            //TODO 用上一帧的时间预测下一帧的时间可能会导致帧率抖动
             //开始计时
             GameClock.Start();
             //更新所有需要更新的组件
@@ -81,20 +97,13 @@ namespace FadeGE
         /// <param name="height">游戏窗口高度</param>
         /// <param name="title">游戏窗口标题</param>
         private void InitRenderComponent(int width, int height, string title) {
-            form = new RenderForm {
-                Size = new Size(width, height),
-                StartPosition = FormStartPosition.CenterScreen,
-                AutoScaleMode = AutoScaleMode.None,
-                Text = title
-            };
-
             WindowSize = new Size2(width, height);
 
             var factory = new Factory(FactoryType.SingleThreaded);
 
             var hwndRenderTargetProperties = new HwndRenderTargetProperties {
-                Hwnd = form.Handle,
-                PixelSize = new Size2(form.Width, form.Height),
+                Hwnd = Form.Handle,
+                PixelSize = new Size2(Form.Width, Form.Height),
                 PresentOptions = PresentOptions.RetainContents
             };
 

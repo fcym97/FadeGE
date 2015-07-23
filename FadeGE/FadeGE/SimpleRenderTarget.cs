@@ -27,7 +27,7 @@ namespace FadeGE
                                              frameSize.Width,
                                              frameSize.Height),
                               opacity,
-                              BitmapInterpolationMode.Linear,
+                              BitmapInterpolationMode.NearestNeighbor,
                               srcRectangleF
                 );
         }
